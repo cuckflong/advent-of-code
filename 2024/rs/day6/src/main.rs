@@ -10,15 +10,13 @@ fn main() {
     let input = std::fs::read_to_string("input.txt").expect("Failed to read input file");
 
     let mut current_pos = (0, 0);
-    let mut grid: Vec<Vec<char>> =
-        vec![vec!['.'; input.lines().next().unwrap().len()]; input.lines().count()];
+    let grid: Vec<Vec<char>> = input.lines().map(|line| line.chars().collect()).collect();
 
     for (row, line) in input.lines().enumerate() {
         for (col, ch) in line.chars().enumerate() {
             if ch != '.' && ch != '#' {
                 current_pos = (row, col);
             }
-            grid[row][col] = ch;
         }
     }
 
@@ -198,7 +196,6 @@ fn part_one(mut grid: Vec<Vec<char>>, mut current_pos: (usize, usize)) -> Vec<(u
 fn part_two(grid: Vec<Vec<char>>, current_pos: (usize, usize), path: Vec<(usize, usize)>) {
     let mut count = 0;
     for pos in path {
-        println!("{:?}", pos);
         let mut new_grid = grid.clone();
         new_grid[pos.0][pos.1] = '#';
         if !is_possible(new_grid, current_pos) {
